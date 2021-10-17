@@ -7,30 +7,41 @@ import {
 } from "react-router-dom";
 import NotFound from './Pages/NotFound/NotFound.js';
 import Booking from "./../src/Pages/Booking/Booking.js";
+import Header from './Pages/Shared/Header/Header.js';
+import Login from './Pages/Login/Login/Login.js';
+import AuthProvider from './contexts/AuthProvider.js';
+import PrivateRoute from './Pages/Login/PrivateRoute/PrivateRoute.js';
 
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Home></Home>
-          </Route>
+      <AuthProvider>
+        <Router>
+          <Header></Header>
+          <Switch>
+            <Route exact path="/">
+              <Home></Home>
+            </Route>
 
-          <Route path="/home">
-            <Home></Home>
-          </Route>
+            <Route path="/home">
+              <Home></Home>
+            </Route>
 
-          <Route path="/booking/:serviceId">
-            <Booking></Booking>
-          </Route>
+            <PrivateRoute path="/booking/:serviceId">
+              <Booking></Booking>
+            </PrivateRoute>
 
-          <Route path="*">
-            <NotFound></NotFound>
-          </Route>
-        </Switch>
-      </Router>
+            <Route path="/login">
+              <Login></Login>
+            </Route>
+
+            <Route path="*">
+              <NotFound></NotFound>
+            </Route>
+          </Switch>
+        </Router>
+      </AuthProvider>
     </div>
   );
 }
